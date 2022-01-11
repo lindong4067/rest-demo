@@ -16,11 +16,14 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<com.example.rest-demo.version>1.0</com.example.rest-demo.version>
+        <nacos.version>2.0.0</nacos.version>
 	</properties>
 	
     <modules>
+        <module>producer-api</module>
         <module>producer</module>
         <module>consumer</module>
+        <module>common</module>
     </modules>
 	
 	<parent>
@@ -38,6 +41,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.nacos</groupId>
+            <artifactId>nacos-client</artifactId>
+            <version>${nacos.version}</version>
         </dependency>
     </dependencies>
 

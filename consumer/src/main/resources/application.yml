@@ -1,2 +1,6 @@
 server:
   port: 38080
+rpc:
+  port: 38081
+nacos:
+  addr: 127.0.0.1:8848

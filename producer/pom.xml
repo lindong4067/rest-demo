@@ -12,7 +12,20 @@
     <artifactId>producer</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>producer-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
