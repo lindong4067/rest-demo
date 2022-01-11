@@ -1,2 +1,2 @@
 # rest-demo
-模拟Rest调用
+基于REST接口的RPC框架
