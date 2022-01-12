@@ -17,4 +17,8 @@ public enum MsgStatus {
     public static boolean isSuccess(byte code) {
         return MsgStatus.SUCCESS.code == code;
     }
+
+    public byte getCode() {
+        return code;
+    }
 }

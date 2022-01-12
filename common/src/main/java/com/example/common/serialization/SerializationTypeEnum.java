@@ -10,6 +10,8 @@ public enum SerializationTypeEnum {
 
     private byte type;
 
+
+
     SerializationTypeEnum(byte type) {
         this.type = type;
     }
@@ -27,4 +29,12 @@ public enum SerializationTypeEnum {
         return type;
     }
 
+    public static SerializationTypeEnum parseByType(byte type) {
+        for (SerializationTypeEnum typeEnum : SerializationTypeEnum.values()) {
+            if (typeEnum.type == type) {
+                return typeEnum;
+            }
+        }
+        return HESSIAN;
+    }
 }

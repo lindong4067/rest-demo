@@ -1,5 +1,8 @@
-package com.restdemo.producer.rpc;
+package com.restdemo.producer.server;
 
+import com.example.common.codec.RpcDecoder;
+import com.example.common.codec.RpcEncoder;
+import com.restdemo.producer.handler.RpcRequestHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -8,7 +11,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,8 +42,9 @@ public class NettyRpcServer implements RpcServer {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline()
-                                    .addLast(new StringDecoder());
-                            //todo
+                                    .addLast(new RpcEncoder<>())
+                                    .addLast(new RpcDecoder())
+                                    .addLast(new RpcRequestHandler());
                         }
                     })
                     .childOption(ChannelOption.SO_KEEPALIVE, true);

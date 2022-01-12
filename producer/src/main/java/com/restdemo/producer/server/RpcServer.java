@@ -1,4 +1,4 @@
-package com.restdemo.producer.rpc;
+package com.restdemo.producer.server;
 
 /**
  * @author lindzhao
