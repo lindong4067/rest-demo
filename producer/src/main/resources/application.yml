@@ -1,7 +1,7 @@
 server:
   port: 28080
 rpc:
-  ip: 10.242.28.209
+  ip: 127.0.0.1
   port: 28081
 nacos:
   addr: 127.0.0.1:8848

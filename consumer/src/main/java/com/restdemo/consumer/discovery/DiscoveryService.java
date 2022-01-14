@@ -1,4 +1,4 @@
-package com.example.common.discovery;
+package com.restdemo.consumer.discovery;
 
 import com.example.common.pojo.ServiceInstance;
 

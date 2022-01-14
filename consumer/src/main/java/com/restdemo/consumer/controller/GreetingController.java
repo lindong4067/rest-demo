@@ -20,4 +20,9 @@ public class GreetingController {
     public ResponseEntity<String> greet(@PathVariable("name") String name) {
         return ResponseEntity.ok(greetingService.greet(name));
     }
+
+    @GetMapping("/hello/test")
+    public ResponseEntity<String> greet() {
+        return ResponseEntity.ok("OK");
+    }
 }

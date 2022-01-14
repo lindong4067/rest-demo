@@ -1,16 +1,19 @@
 package com.restdemo.producer.handler;
 
+import com.example.common.exception.RpcException;
 import com.example.common.pojo.RpcRequest;
 import com.example.common.pojo.RpcResponse;
 import com.example.common.protocol.MessageHeader;
 import com.example.common.protocol.MessageProtocol;
 import com.example.common.protocol.MsgStatus;
 import com.example.common.protocol.MsgType;
+import com.restdemo.producer.store.LocalServiceCache;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Method;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -47,7 +50,15 @@ public class RpcRequestHandler extends SimpleChannelInboundHandler<MessageProtoc
     }
 
     private Object handle(RpcRequest request) {
-        //TODO
-        return null;
+        try {
+            Object bean = LocalServiceCache.get(request.getServiceName());
+            if (bean == null) {
+                throw new RpcException("service not exist: " + request.getServiceName());
+            }
+            Method method = bean.getClass().getMethod(request.getMethod(), request.getParameterTypes());
+            return method.invoke(bean, request.getParameters());
+        } catch (Exception e) {
+            throw new RpcException(e);
+        }
     }
 }

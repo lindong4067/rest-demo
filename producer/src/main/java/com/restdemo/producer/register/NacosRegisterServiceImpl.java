@@ -1,30 +1,29 @@
-package com.example.common.register;
+package com.restdemo.producer.register;
 
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
 /**
  * @author lindzhao
  */
+@Component
 public class NacosRegisterServiceImpl implements RegisterService {
     private static final Logger logger = LoggerFactory.getLogger(NacosRegisterServiceImpl.class);
-
+    @Value("${nacos.addr}")
     private String nacosAddr;
+    @Value("${nacos.namespace}")
     private String namespace;
+    @Value("${rpc.ip}")
     private String ip;
+    @Value("${rpc.port}")
     private int port;
-
-    public NacosRegisterServiceImpl(String nacosAddr, String namespace, String ip, int port) {
-        this.nacosAddr = nacosAddr;
-        this.namespace = namespace;
-        this.ip = ip;
-        this.port = port;
-    }
 
     @Override
     public void register(String serviceName) {
@@ -41,6 +40,7 @@ public class NacosRegisterServiceImpl implements RegisterService {
 
     @Override
     public void unregister(String serviceName) {
+        //todo where is unregister
         try {
             Properties properties = new Properties();
             properties.setProperty("serverAddr", nacosAddr);

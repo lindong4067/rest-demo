@@ -1,4 +1,4 @@
-package com.example.common.register;
+package com.restdemo.producer.register;
 
 /**
  * @author lindzhao

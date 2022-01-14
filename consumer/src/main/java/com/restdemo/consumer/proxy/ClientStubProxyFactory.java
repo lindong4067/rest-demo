@@ -1,6 +1,7 @@
 package com.restdemo.consumer.proxy;
 
-import com.example.common.discovery.DiscoveryService;
+import com.restdemo.consumer.discovery.DiscoveryService;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Proxy;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 /**
  * @author lindzhao
  */
+@Component
 public class ClientStubProxyFactory {
 
     private Map<Class<?>, Object> objectMap = new HashMap<>();

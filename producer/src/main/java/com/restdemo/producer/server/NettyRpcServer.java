@@ -13,22 +13,25 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 /**
  * @author lindzhao
  */
+@Component
 public class NettyRpcServer implements RpcServer {
     private static final Logger logger = LoggerFactory.getLogger(NettyRpcServer.class);
+    @Value("${rpc.ip:10.242.28.209}")
     private String serverAddress;
+    @Value("${rpc.port:28081}")
     private int port;
     private ServerBootstrap bootstrap;
     private EventLoopGroup boss;
     private EventLoopGroup worker;
-
-    public NettyRpcServer(String serverAddress, int port) {
-        this.serverAddress = serverAddress;
-        this.port = port;
-    }
 
     @Override
     public void start() {
@@ -50,17 +53,29 @@ public class NettyRpcServer implements RpcServer {
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture channelFuture = bootstrap.bind(serverAddress, port).sync();
             logger.info("server addr {} started on port {}", serverAddress, port);
-            channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
             logger.error("netty server start failed.", e);
-        } finally {
-            boss.shutdownGracefully();
-            worker.shutdownGracefully();
         }
     }
 
     @Override
     public void stop() {
-        // todo
+        try {
+            boss.shutdownGracefully();
+            worker.shutdownGracefully();
+            logger.info("server addr {} stopped on port {}", serverAddress, port);
+        } catch (Exception e) {
+            logger.error("netty server stop failed.", e);
+        }
+    }
+
+    @PostConstruct
+    public void init() {
+        start();
+    }
+
+    @PreDestroy
+    public void destroy() {
+        stop();
     }
 }
